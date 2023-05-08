@@ -15,15 +15,28 @@ const SingleMovie = () => {
         }
         getMovie();
     }, []);
-
-    return (
-        <div>
-            <img src={img} alt="picture"/>
-            <h1>{title}</h1>
-            <h2>{category}</h2>
-            <p>{long_desc}</p>
-            <button><Link to="/">Powrót do listy filmów</Link></button>
-        </div>
-    );
+    if(!movie) {
+        return (
+            <h1>Ładowanie...</h1>
+        )
+    } else {
+        return (
+            <div className="col-md-10 m-auto">
+                <div className="mb-4">
+                    <img className="mb-3 mw-400" src={img} alt="Picture"/>
+                    <div>
+                        <h4>{title}</h4>
+                        <h5 className="text-muted">{category}</h5>
+                        <p className="card-text">{long_desc}</p>
+                        <div className="d-flex flex-row flex-wrap gap-2">
+                            <button type="button" className="btn btn-primary"><Link
+                                className="text-white text-decoration-none" to="/">Powrót do listy filmów</Link>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 export default SingleMovie;
