@@ -3,7 +3,7 @@ import React from "react";
 
 const SingleMovie = ({id, img, title, category, short_desc }) => {
     return (
-        <div key={id}>
+        <div>
             <img src={img} alt="Image"/>
             <h1>{title}</h1>
             <h2>{category}</h2>
