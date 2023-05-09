@@ -2,7 +2,6 @@ import SelectField from "../SelectField/SelectField";
 import React from "react";
 
 export const Filter = ({ category, filter, categories }) => {
-
     return (
         <>
             <h2>Wyszukaj wg kategorii</h2>

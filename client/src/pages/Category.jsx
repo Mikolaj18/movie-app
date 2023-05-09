@@ -4,6 +4,8 @@ import React, {useEffect, useRef, useState} from "react";
 import {categoryDataPost} from "../db/category/categoriesDataPost";
 import {categoriesDataGetAll} from "../db/category/categoriesDataGetAll";
 import {categoryDataGetByName} from "../db/category/categoryDataGetByName";
+import {Link} from "react-router-dom";
+import {categoryDataDelete} from "../db/category/categoryDataDelete";
 
 const Category = () => {
     const [categories, setCategories] = useState([]);
@@ -15,6 +17,10 @@ const Category = () => {
         }
         fetchCategories();
     }, [categories])
+
+    const handleDelete = async (id) => {
+        await categoryDataDelete(id);
+    }
 
     const handleClick = async (e) => {
         e.preventDefault();
@@ -41,12 +47,22 @@ const Category = () => {
                            ref={categoryRef}
                 />
             </div>
-            <button className="btn btn-success mt-4" onClick={handleClick}>Dodaj kategorię</button>
+            <div className="d-flex flex-wrap gap-3 mt-4">
+                <button className="btn btn-success" onClick={handleClick}>Dodaj kategorię</button>
+                <button className="btn btn-primary"><Link className="text-white text-decoration-none" to="/add">Dodaj film</Link></button>
+                <button className="btn btn-primary"><Link className="text-white text-decoration-none" to="/">Powrót do listy filmów</Link></button>
+            </div>
         </Form>
-            <div>
-                {categories.map(cat => (
-                    <div key={cat.id}>{cat.name}</div>
-                ))}
+            <div className="mt-5">
+                <h2 className="mb-3">Aktywne kategorie:</h2>
+                <ul className="list-group m-0 mt-2 p-0 w-25">
+                    {categories.map(cat => (
+                        <li className="list-group-item d-flex justify-content-between align-items-center" key={cat.id}>
+                            {cat.name}
+                            <button onClick={() => handleDelete(cat.id)} className="btn btn-danger">Usuń</button>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </>
     );

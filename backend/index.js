@@ -74,7 +74,6 @@ app.put("/movie/:id", (req, res) => {
     });
 });
 
-
 app.get("/categories", (req, res) => {
     const query = "SELECT * FROM categories";
     db.query(query, (err, data) => {
@@ -98,6 +97,14 @@ app.post("/categories", (req, res) => {
 
     db.query(query, [values], (err, data) => {
         return err ? res.json(err) : res.json("Category has been created!");
+    });
+});
+
+app.delete("/category/:id", (req, res) => {
+    const categoryId = req.params.id;
+    const query = "DELETE FROM categories WHERE id = ?";
+    db.query(query, [categoryId], (err, data) => {
+        return err ? res.json(err) : res.json("Category has been deleted!");
     });
 });
 
