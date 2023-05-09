@@ -1,5 +1,5 @@
 export const Filter = ({ category, filter, categories }) => {
-    const uniqueCategories = [...new Set(categories.map((cat) => cat.category.toLowerCase()))];
+
     return (
         <>
             <h2>Wyszukaj wg kategorii</h2>
@@ -12,10 +12,8 @@ export const Filter = ({ category, filter, categories }) => {
                     value={category}
                 >
                     <option value="">Wszystkie</option>
-                    {uniqueCategories.map((cat) => (
-                        <option key={cat} value={cat}>
-                            {cat}
-                        </option>
+                    {categories.map((cat) => (
+                        <option key={cat.id}>{cat.name.toLowerCase()}</option>
                     ))}
                 </select>
             </div>

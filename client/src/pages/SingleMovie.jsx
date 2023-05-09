@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
-import {movieDataGet} from "../db/movieDataGet";
-import {movieDataDelete} from "../db/movieDataDelete";
-
+import {movieDataGet} from "../db/movie/movieDataGet";
 
 const SingleMovie = () => {
     const {id} = useParams();

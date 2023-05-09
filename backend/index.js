@@ -74,6 +74,33 @@ app.put("/movie/:id", (req, res) => {
     });
 });
 
+
+app.get("/categories", (req, res) => {
+    const query = "SELECT * FROM categories";
+    db.query(query, (err, data) => {
+        return err ? res.json(err) : res.json(data);
+    });
+});
+
+app.get("/category/:name", (req, res) => {
+    const categoryName = req.params.name;
+    const query = "SELECT * FROM categories WHERE name = ?";
+    db.query(query, [categoryName],(err, data) => {
+        return err ? res.json(err) : res.json(data);
+    });
+});
+
+app.post("/categories", (req, res) => {
+    const query = "INSERT INTO categories (`name`) VALUES (?)";
+    const values = [
+        req.body.name,
+    ];
+
+    db.query(query, [values], (err, data) => {
+        return err ? res.json(err) : res.json("Category has been created!");
+    });
+});
+
 app.listen(8800, () => {
     console.log("Connected to backend!");
 });
