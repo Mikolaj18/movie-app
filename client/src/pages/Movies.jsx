@@ -28,14 +28,14 @@ const Movies = () => {
         if(!selectedCategory) {
             return movies;
         }
-        return movies.filter((item) => item.category === selectedCategory);
+        return movies.filter((item) => item.category.toLowerCase() === selectedCategory);
     }
     const filteredList = useMemo(getFilteredList, [selectedCategory, movies]);
     if(!movies) {
         return (
             <h1>Ładowanie...</h1>
         )
-    } else {
+    }
     return (
         <div>
             <Filter category={selectedCategory} categories={movies} filter={handleCategoryChange}/>
@@ -61,7 +61,6 @@ const Movies = () => {
 
         </div>
     );
-    }
 }
 
 export default Movies;

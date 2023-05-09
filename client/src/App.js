@@ -5,6 +5,7 @@ import SingleMovie from "./pages/SingleMovie";
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import AddMovie from "./pages/AddMovie";
+import UpdateMovie from "./pages/UpdateMovie";
 
 function App() {
     return (
@@ -12,8 +13,9 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Movies />} />
-                    <Route path="/movie/:id" element={<SingleMovie/>}/>
                     <Route path="/add" element={<AddMovie/>}/>
+                    <Route path="/movie/:id" element={<SingleMovie/>}/>
+                    <Route path="/update/:id" element={<UpdateMovie/>}/>
                 </Routes>
             </BrowserRouter>
         </div>

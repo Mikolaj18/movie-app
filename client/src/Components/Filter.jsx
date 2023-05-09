@@ -1,5 +1,5 @@
 export const Filter = ({ category, filter, categories }) => {
-    const uniqueCategories = [...new Set(categories.map((cat) => cat.category))];
+    const uniqueCategories = [...new Set(categories.map((cat) => cat.category.toLowerCase()))];
     return (
         <>
             <h2>Wyszukaj wg kategorii</h2>
