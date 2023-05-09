@@ -3,6 +3,7 @@ import {moviesDataGetAll} from "../db/moviesDataGetAll";
 import SingleMovie from "../Components/SingleMovie";
 import {Filter} from "../Components/Filter";
 import {Link} from "react-router-dom";
+import {movieDataDelete} from "../db/movieDataDelete";
 
 const Movies = () => {
     const [movies, setMovies] = useState([]);
@@ -17,6 +18,10 @@ const Movies = () => {
 
     const handleCategoryChange = (e) => {
         setSelectedCategory(e.target.value)
+    }
+
+    const handleDelete = async (id) => {
+        await movieDataDelete(id);
     }
 
     const getFilteredList = () => {
@@ -46,7 +51,9 @@ const Movies = () => {
                                 title={movie.title}
                                 category={movie.category}
                                 img={movie.img}
-                                short_desc={movie.short_desc}/>
+                                short_desc={movie.short_desc}
+                                onDelete={() => handleDelete(movie.id)}
+                            />
                         ))}
                     </div>
                 </div>

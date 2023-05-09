@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import {movieDataGet} from "../db/movieDataGet";
+import {movieDataDelete} from "../db/movieDataDelete";
 
 
 const SingleMovie = () => {
@@ -14,7 +15,8 @@ const SingleMovie = () => {
             setMovie(await movieDataGet(id));
         }
         getMovie();
-    }, []);
+    }, [id]);
+
     if(!movie) {
         return (
             <h1>Ładowanie...</h1>
@@ -29,8 +31,8 @@ const SingleMovie = () => {
                         <h5 className="text-muted">{category}</h5>
                         <p className="card-text">{long_desc}</p>
                         <div className="d-flex flex-row flex-wrap gap-2">
-                            <button type="button" className="btn btn-primary"><Link
-                                className="text-white text-decoration-none" to="/">Powrót do listy filmów</Link>
+                            <button type="button" className="btn btn-primary">
+                                <Link className="text-white text-decoration-none" to="/">Powrót do listy filmów</Link>
                             </button>
                         </div>
                     </div>

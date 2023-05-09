@@ -11,7 +11,7 @@ export const Filter = ({ category, filter, categories }) => {
                     onChange={filter}
                     value={category}
                 >
-                    <option value=""></option>
+                    <option value="">Wszystkie</option>
                     {uniqueCategories.map((cat) => (
                         <option key={cat} value={cat}>
                             {cat}
