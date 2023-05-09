@@ -2,8 +2,6 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Movies from "./pages/Movies";
 import SingleMovie from "./pages/SingleMovie";
-import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.css'
 import AddMovie from "./pages/AddMovie";
 import UpdateMovie from "./pages/UpdateMovie";
 import Category from "./pages/Category";
