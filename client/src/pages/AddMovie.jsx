@@ -1,9 +1,11 @@
-import React, {useRef} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import FormInput from "../Components/FormInput/FormInput";
 import {movieDataPost} from "../db/movie/movieDataPost";
 import TextareaField from "../Components/TextareaField/TextareaField";
 import Form from "../Components/Form/Form";
+import {CategoriesContext} from "../Providers/CategoriesProvider";
+import SelectField from "../Components/SelectField/SelectField";
 
 const AddMovie = () => {
     const titleRef = useRef();
@@ -13,6 +15,12 @@ const AddMovie = () => {
     const imgRef = useRef();
     const navigate = useNavigate();
 
+    const [selectedCategory, setSelectedCategory] = useState();
+    const { categories } = useContext(CategoriesContext);
+
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value)
+    }
 
     const handleClick = async (e) => {
         e.preventDefault();
@@ -27,10 +35,9 @@ const AddMovie = () => {
         navigate("/")
     };
 
-
     return (
         <>
-        <div className='form d-flex flex-column gap-3'>
+        <div>
             <h1>Dodaj nowy film</h1>
             <Form>
                 <FormInput type="text"
@@ -59,14 +66,20 @@ const AddMovie = () => {
                                rows="10"
                                cols="20"
                 />
-                <FormInput type="text"
-                           className="form-control"
-                           labelText="Kategoria"
-                           forLabel="category"
-                           id="category"
-                           name="category"
-                           ref={categoryRef}
-                />
+                <SelectField
+                    className="form-select form-select-lg mb-3"
+                    name="category-list"
+                    id="category-list"
+                    onChange={handleCategoryChange}
+                    value={selectedCategory}
+                    ref={categoryRef}
+                    labelText="Kategoria"
+                    forLabel="category-list"
+                >
+                    {categories.map((cat) => (
+                        <option key={cat.id}>{cat.name.toLowerCase()}</option>
+                    ))}
+                </SelectField>
                 <FormInput type="text"
                            className="form-control"
                            labelText="Obraz"

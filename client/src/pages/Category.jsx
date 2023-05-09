@@ -2,7 +2,6 @@ import Form from "../Components/Form/Form";
 import FormInput from "../Components/FormInput/FormInput";
 import React, {useEffect, useRef, useState} from "react";
 import {categoryDataPost} from "../db/category/categoriesDataPost";
-import {useNavigate} from "react-router-dom";
 import {categoriesDataGetAll} from "../db/category/categoriesDataGetAll";
 import {categoryDataGetByName} from "../db/category/categoryDataGetByName";
 
@@ -24,7 +23,6 @@ const Category = () => {
         const categoryObject = {
             name: categoryRef.current.value
         }
-
         if(!checkIfCategoryExists) {
             await categoryDataPost(categoryObject);
         }

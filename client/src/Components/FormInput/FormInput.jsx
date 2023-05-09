@@ -1,9 +1,9 @@
 import React, { forwardRef } from "react";
 
-const FormInput = forwardRef(({ labelText, forLabel, className, ...inputProps }, ref) => {
+const FormInput = forwardRef(({ labelText, forLabel, className, labelVisible = true, ...inputProps }, ref) => {
     return (
         <>
-            <label className="form-label" htmlFor={forLabel}>{labelText}</label>
+            <label className="form-label mt-3" htmlFor={forLabel}>{labelText}</label>
             <input
                 {...inputProps}
                 className={className}

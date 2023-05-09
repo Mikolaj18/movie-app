@@ -1,28 +1,22 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useContext, useEffect, useMemo, useState} from "react";
 import {moviesDataGetAll} from "../db/movie/moviesDataGetAll";
 import SingleMovie from "../Components/SingleMovie/SingleMovie";
 import {Filter} from "../Components/Filter/Filter";
 import {Link} from "react-router-dom";
 import {movieDataDelete} from "../db/movie/movieDataDelete";
-import {categoriesDataGetAll} from "../db/category/categoriesDataGetAll";
+import {CategoriesContext} from "../Providers/CategoriesProvider";
 
 const Movies = () => {
     const [movies, setMovies] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState();
-    const [categories, setCategories] = useState();
-
-
+    const { categories } = useContext(CategoriesContext);
 
     useEffect(() => {
         const getAllMovies = async () => {
             setMovies(await moviesDataGetAll());
         }
 
-        const getAllCategories = async () => {
-            setCategories(await categoriesDataGetAll());
-        }
         getAllMovies();
-        getAllCategories();
     }, [])
 
     const handleCategoryChange = (e) => {
