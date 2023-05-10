@@ -43,8 +43,16 @@ const Movies = () => {
         <div>
             <Filter category={selectedCategory} categories={categories} filter={handleCategoryChange}/>
             <h1 className="text-primary">Moja lista filmów</h1>
-            <button type="button" className="btn btn-primary mb-3 mt-3"><Link className="text-white text-decoration-none" to={`/add`}>Dodaj kolejny film</Link></button>
-            <button type="button" className="btn btn-primary mb-3 mx-3 mt-3"><Link className="text-white text-decoration-none" to={`/category`}>Dodaj kategorię</Link></button>
+                <Link className="text-white text-decoration-none" to={`/add`}>
+                    <button type="button" className="btn btn-primary mb-3 mt-3">
+                        Dodaj kolejny film
+                    </button>
+                </Link>
+                <Link className="text-white text-decoration-none" to={`/category`}>
+                    <button type="button" className="btn btn-primary mb-3 mx-3 mt-3">
+                        Dodaj kategorię
+                    </button>
+                </Link>
             <div className="py-5 mb-5 bg-light">
                 <div className="container">
                     <div className="row">
@@ -62,7 +70,6 @@ const Movies = () => {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }

@@ -49,8 +49,14 @@ const Category = () => {
             </div>
             <div className="d-flex flex-wrap gap-3 mt-4">
                 <button className="btn btn-success" onClick={handleClick}>Dodaj kategorię</button>
-                <button className="btn btn-primary"><Link className="text-white text-decoration-none" to="/add">Dodaj film</Link></button>
-                <button className="btn btn-primary"><Link className="text-white text-decoration-none" to="/">Powrót do listy filmów</Link></button>
+                    <Link className="text-white text-decoration-none" to="/add">
+                        <button className="btn btn-primary">
+                            Dodaj film
+                        </button>
+                    </Link>
+                <Link className="text-white text-decoration-none" to="/">
+                    <button className="btn btn-primary">Powrót do listy filmów</button>
+                </Link>
             </div>
         </Form>
             <div className="mt-5">
