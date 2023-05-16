@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import React from "react";
 
-const SingleMovie = ({id, img, title, category, short_desc, onDelete }) => {
+const SingleMovie = ({id, img, title, category, short_desc, state, onDelete }) => {
     return (
         <div className="col-md-4">
             <div className="card mb-4 shadow">
@@ -17,7 +17,7 @@ const SingleMovie = ({id, img, title, category, short_desc, onDelete }) => {
                             </button>
                         </Link>
 
-                            <Link className="text-white text-decoration-none" to={`/update/${id}`}>
+                            <Link className="text-white text-decoration-none" to={`/movie?edit=${id}`} state={state}>
                                 <button type="button" className="btn btn-success">
                                     Edytuj
                                 </button>

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import {movieDataGet} from "../db/movie/movieDataGet";
+import DOMPurify from "dompurify";
+
 
 const SingleMovie = () => {
     const {id} = useParams();
@@ -27,7 +29,11 @@ const SingleMovie = () => {
                     <div>
                         <h4>{title}</h4>
                         <h5 className="text-muted">{category}</h5>
-                        <p className="card-text">{long_desc}</p>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(long_desc),
+                            }}
+                        ></p>
                         <div className="d-flex flex-row flex-wrap gap-2">
                             <button type="button" className="btn btn-primary">
                                 <Link className="text-white text-decoration-none" to="/">Powrót do listy filmów</Link>

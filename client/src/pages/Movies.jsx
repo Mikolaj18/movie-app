@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useMemo, useState} from "react";
 import {moviesDataGetAll} from "../db/movie/moviesDataGetAll";
 import SingleMovie from "../Components/SingleMovie/SingleMovie";
 import {Filter} from "../Components/Filter/Filter";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {movieDataDelete} from "../db/movie/movieDataDelete";
 import {CategoriesContext} from "../Providers/CategoriesProvider";
 
@@ -43,7 +43,7 @@ const Movies = () => {
         <div>
             <Filter category={selectedCategory} categories={categories} filter={handleCategoryChange}/>
             <h1 className="text-primary">Moja lista filmów</h1>
-                <Link className="text-white text-decoration-none" to={`/add`}>
+                <Link className="text-white text-decoration-none" to={`/movie`}>
                     <button type="button" className="btn btn-primary mb-3 mt-3">
                         Dodaj kolejny film
                     </button>
@@ -64,6 +64,7 @@ const Movies = () => {
                                 category={movie.category}
                                 img={movie.img}
                                 short_desc={movie.short_desc}
+                                state={movie}
                                 onDelete={() => handleDelete(movie.id)}
                             />
                         ))}

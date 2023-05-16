@@ -1,23 +1,26 @@
 import React, {useContext, useRef, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import FormInput from "../Components/FormInput/FormInput";
 import {movieDataPost} from "../db/movie/movieDataPost";
 import Form from "../Components/Form/Form";
 import {CategoriesContext} from "../Providers/CategoriesProvider";
 import SelectField from "../Components/SelectField/SelectField";
 import ReactQuillField from "../Components/ReactQuillField";
+import {movieDataUpdate} from "../db/movie/movieDataUpdate";
 
 const AddMovie = () => {
-    const titleRef = useRef();
-    const shortDescRef = useRef();
-    const longDescRef = useRef();
-    const categoryRef = useRef();
-    const imgRef = useRef();
+    const state = useLocation().state;
     const navigate = useNavigate();
 
-    const [selectedCategory, setSelectedCategory] = useState();
-    const [description, setDescription] = useState();
+    const titleRef = useRef();
+    const shortDescRef = useRef();
+    const categoryRef = useRef();
+    const imgRef = useRef();
+
     const { categories } = useContext(CategoriesContext);
+
+    const [selectedCategory, setSelectedCategory] = useState();
+    const [description, setDescription] = useState(state?.long_desc || "");
 
     const handleCategoryChange = (e) => {
         setSelectedCategory(e.target.value)
@@ -28,11 +31,15 @@ const AddMovie = () => {
         const movieObject = {
             title: titleRef.current.value,
             short_desc: shortDescRef.current.value,
-            long_desc: longDescRef.current.value,
+            long_desc: description,
             category: categoryRef.current.value,
             img: imgRef.current.value,
         }
-        await movieDataPost(movieObject)
+        try {
+            state ? await movieDataUpdate(state.id, movieObject) : await movieDataPost(movieObject)
+        } catch (e) {
+            console.log(e);
+        }
         navigate("/")
     };
 
@@ -48,6 +55,7 @@ const AddMovie = () => {
                            id="title"
                            name="title"
                            ref={titleRef}
+                           defaultValue={state?.title || ""}
                 />
                 <FormInput type="text"
                            className="form-control"
@@ -56,6 +64,7 @@ const AddMovie = () => {
                            id="short_desc"
                            name="short_desc"
                            ref={shortDescRef}
+                           defaultValue={state?.short_desc || ""}
                 />
                 <ReactQuillField
                     value={description}
@@ -84,6 +93,7 @@ const AddMovie = () => {
                            id="img"
                            name="img"
                            ref={imgRef}
+                           defaultValue={state?.img || ""}
                 />
             </Form>
         </div>
