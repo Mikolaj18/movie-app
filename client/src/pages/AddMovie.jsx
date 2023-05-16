@@ -7,6 +7,7 @@ import {CategoriesContext} from "../Providers/CategoriesProvider";
 import SelectField from "../Components/SelectField/SelectField";
 import ReactQuillField from "../Components/ReactQuillField";
 import {movieDataUpdate} from "../db/movie/movieDataUpdate";
+import {fileDataSave} from "../db/file/fileDataSave";
 
 const AddMovie = () => {
     const state = useLocation().state;
@@ -15,7 +16,7 @@ const AddMovie = () => {
     const titleRef = useRef();
     const shortDescRef = useRef();
     const categoryRef = useRef();
-    const imgRef = useRef();
+    const fileRef = useRef();
 
     const { categories } = useContext(CategoriesContext);
 
@@ -26,14 +27,27 @@ const AddMovie = () => {
         setSelectedCategory(e.target.value)
     }
 
+    const upload = async () => {
+        try {
+            const formData = new FormData();
+            const file = fileRef.current.files[0];
+            formData.append('file', file);
+            return await fileDataSave(formData);
+        } catch (error) {
+            console.log(error);
+            return "";
+        }
+    }
+
     const handleClick = async (e) => {
         e.preventDefault();
+        const imgUrl = await upload();
         const movieObject = {
             title: titleRef.current.value,
             short_desc: shortDescRef.current.value,
             long_desc: description,
             category: categoryRef.current.value,
-            img: imgRef.current.value,
+            img: fileRef.current.files[0] ? imgUrl : "",
         }
         try {
             state ? await movieDataUpdate(state.id, movieObject) : await movieDataPost(movieObject)
@@ -86,14 +100,13 @@ const AddMovie = () => {
                         <option key={cat.id}>{cat.name.toLowerCase()}</option>
                     ))}
                 </SelectField>
-                <FormInput type="text"
+                <FormInput type="file"
                            className="form-control"
                            labelText="Obraz"
                            forLabel="img"
                            id="img"
                            name="img"
-                           ref={imgRef}
-                           defaultValue={state?.img || ""}
+                           ref={fileRef}
                 />
             </Form>
         </div>

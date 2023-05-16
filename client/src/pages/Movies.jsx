@@ -62,7 +62,7 @@ const Movies = () => {
                                 id={movie.id}
                                 title={movie.title}
                                 category={movie.category}
-                                img={movie.img}
+                                img={`../upload/${movie.img}`}
                                 short_desc={movie.short_desc}
                                 state={movie}
                                 onDelete={() => handleDelete(movie.id)}
