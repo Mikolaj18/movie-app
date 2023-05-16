@@ -2,10 +2,10 @@ import React, {useContext, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import FormInput from "../Components/FormInput/FormInput";
 import {movieDataPost} from "../db/movie/movieDataPost";
-import TextareaField from "../Components/TextareaField/TextareaField";
 import Form from "../Components/Form/Form";
 import {CategoriesContext} from "../Providers/CategoriesProvider";
 import SelectField from "../Components/SelectField/SelectField";
+import ReactQuillField from "../Components/ReactQuillField";
 
 const AddMovie = () => {
     const titleRef = useRef();
@@ -16,6 +16,7 @@ const AddMovie = () => {
     const navigate = useNavigate();
 
     const [selectedCategory, setSelectedCategory] = useState();
+    const [description, setDescription] = useState();
     const { categories } = useContext(CategoriesContext);
 
     const handleCategoryChange = (e) => {
@@ -56,15 +57,11 @@ const AddMovie = () => {
                            name="short_desc"
                            ref={shortDescRef}
                 />
-                <TextareaField type="text"
-                               className="form-control"
-                               labelText="Długi tytuł"
-                               forLabel="long_desc"
-                               id="long_desc"
-                               name="long_desc"
-                               ref={longDescRef}
-                               rows="10"
-                               cols="20"
+                <ReactQuillField
+                    value={description}
+                    onChange={setDescription}
+                    // formErrors={formErrors.description}
+                    labelText="Długi tytuł"
                 />
                 <SelectField
                     className="form-select form-select-lg mb-3"
