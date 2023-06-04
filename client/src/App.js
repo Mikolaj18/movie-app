@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Movies from "./pages/Movies";
-import SingleMovie from "./pages/SingleMovie";
+import Movies from "./pages/Movies/Movies";
+import SingleMovie from "./pages/SingleMovie/SingleMovie";
 import AddMovie from "./pages/AddMovie/AddMovie";
 import Category from "./pages/Category/Category";
 

@@ -5,7 +5,6 @@ import {movieDataPost} from "../../db/movie/movieDataPost";
 import Form from "../../Components/Form/Form";
 import {CategoriesContext} from "../../Providers/CategoriesProvider";
 import SelectField from "../../Components/SelectField/SelectField";
-import ReactQuillField from "../../Components/ReactQuillField";
 import {movieDataUpdate} from "../../db/movie/movieDataUpdate";
 import {fileDataSave} from "../../db/file/fileDataSave";
 import TextareaField from "../../Components/TextareaField/TextareaField";
@@ -22,7 +21,6 @@ const AddMovie = () => {
 
     const { categories } = useContext(CategoriesContext);
     const [selectedCategory, setSelectedCategory] = useState();
-    const [description, setDescription] = useState(state?.long_desc || "");
 
     const handleCategoryChange = (e) => {
         setSelectedCategory(e.target.value)
@@ -41,14 +39,14 @@ const AddMovie = () => {
     }
 
     const handleClick = async (e) => {
-        e.preventDefault();
-        const imgUrl = await upload();
+        let imgUrl;
+        imgUrl = fileRef.current.files[0] ? await upload() : state.img;
         const movieObject = {
             title: titleRef.current.value,
             short_desc: shortDescRef.current.value,
             long_desc: longDescRef.current.value,
             category: categoryRef.current.value,
-            img: fileRef.current.files[0] ? imgUrl : "",
+            img: imgUrl,
         }
         try {
             state ? await movieDataUpdate(state.id, movieObject) : await movieDataPost(movieObject)
@@ -102,6 +100,7 @@ const AddMovie = () => {
                     ref={categoryRef}
                     labelText="Kategoria"
                     forLabel="category-list"
+                    defaultValue={state?.category || ""}
                 >
                     {categories.map((cat) => (
                         <option key={cat.id}>{cat.name.toLowerCase()}</option>

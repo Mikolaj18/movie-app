@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
-import {movieDataGet} from "../db/movie/movieDataGet";
+import {movieDataGet} from "../../db/movie/movieDataGet";
 import DOMPurify from "dompurify";
 
 
@@ -25,7 +25,7 @@ const SingleMovie = () => {
         return (
             <div className="col-md-10 m-auto">
                 <div className="mb-4">
-                    <img className="mb-3 mw-400" src={img} alt="Picture"/>
+                    <img className="mb-3 mw-400" src={`../upload/${img}`} alt="Picture"/>
                     <div>
                         <h4>{title}</h4>
                         <h5 className="text-muted">{category}</h5>

@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useMemo, useState} from "react";
-import {moviesDataGetAll} from "../db/movie/moviesDataGetAll";
-import SingleMovie from "../Components/SingleMovie/SingleMovie";
-import {Filter} from "../Components/Filter/Filter";
+import {moviesDataGetAll} from "../../db/movie/moviesDataGetAll";
+import SingleMovie from "../../Components/SingleMovie/SingleMovie";
+import {Filter} from "../../Components/Filter/Filter";
 import {Link, useLocation} from "react-router-dom";
-import {movieDataDelete} from "../db/movie/movieDataDelete";
-import {CategoriesContext} from "../Providers/CategoriesProvider";
+import {movieDataDelete} from "../../db/movie/movieDataDelete";
+import {CategoriesContext} from "../../Providers/CategoriesProvider";
 
 const Movies = () => {
     const [movies, setMovies] = useState([]);

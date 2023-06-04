@@ -50,7 +50,7 @@ const Category = () => {
             </div>
             <div className="d-flex flex-wrap gap-3 mt-4">
                 <button className="btn btn-success" onClick={handleClick}>Dodaj kategorię</button>
-                    <Link className="text-white text-decoration-none" to="/add">
+                    <Link className="text-white text-decoration-none" to="/movie">
                         <button className="btn btn-primary">
                             Dodaj film
                         </button>

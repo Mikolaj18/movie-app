@@ -1,5 +1,5 @@
 import {categoriesData} from "../../mocks/handlers";
-import {render, screen, waitFor} from '@testing-library/react';
+import {act, render, screen, waitFor} from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 import {BrowserRouter} from "react-router-dom";
 import Category from "./Category";
@@ -14,21 +14,53 @@ const MockCategory = () => {
 
 beforeEach(() => {
     render(
-        <MockCategory />
+        <MockCategory/>
     );
 });
 
 describe("Category", () => {
-
     it("should render input text element", () => {
-       const inputTextElement = screen.getByRole("textbox");
-       expect(inputTextElement).toBeInTheDocument();
+        const inputTextElement = screen.getByRole("textbox");
+        expect(inputTextElement).toBeInTheDocument();
     });
 
-    it('Should fetch categories successfully', async () => {
-        const response = await fetch('http://localhost:8800/categories');
-        const data = await response.json();
-        const categories = data.data;
-        expect(categories).toEqual(categoriesData);
+    it("Should input element be initially empty", () => {
+        const inputTextElement = screen.getByRole("textbox");
+        expect(inputTextElement.value).toBe("");
+    });
+
+    it('Should be able to change category text input', async () => {
+        const inputTextElement = screen.getByRole("textbox");
+        await act(async () => {
+            userEvent.type(inputTextElement, "ExampleCategory");
+        })
+        expect(inputTextElement.value).toBe("ExampleCategory");
+    });
+
+    describe("HTTP Requests", () => {
+        it('Should fetch categories successfully', async () => {
+            const response = await fetch('http://localhost:8800/categories');
+            const data = await response.json();
+            const categories = data.data;
+            expect(categories).toEqual(categoriesData);
+        });
+
+        it("Should handle successful category creation", async () => {
+            const newCategory = {
+                name: "NewCategory",
+            };
+            const response = await fetch("http://localhost:8800/categories", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newCategory),
+            });
+
+            expect(response.status).toBe(200);
+            const responseData = await response.json();
+            expect(responseData.id).toBeDefined();
+            expect(responseData.name).toBe(newCategory.name);
+        });
     });
 });

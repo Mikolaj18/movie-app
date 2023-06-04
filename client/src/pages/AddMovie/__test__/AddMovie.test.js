@@ -22,11 +22,9 @@ beforeEach(() => {
 });
 
 describe('AddMovie', () => {
-
     describe("Text inputs elements", () => {
         it('Should render all text inputs elements', () => {
             const textInputsElements = screen.getAllByRole("textbox");
-            console.log(textInputsElements);
             expect(textInputsElements).toHaveLength(3);
         });
 
@@ -102,6 +100,28 @@ describe('AddMovie', () => {
                 userEvent.selectOptions(selectInput, "cat2");
             });
             expect(selectInput.value).toBe("cat2");
+        });
+
+        it("Should handle successful movie creation", async () => {
+            const newMovie = {
+                title: "newMovie",
+                short_desc: "movieShortDesc",
+                long_desc: "movieLongDesc",
+                category: "cat1",
+                img: "img.jpg",
+            };
+            const response = await fetch("http://localhost:8800/movies", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newMovie),
+            });
+
+            expect(response.status).toBe(200);
+            const responseData = await response.json();
+            expect(responseData.id).toBeDefined();
+            expect(responseData.name).toBe(newMovie.name);
         });
     });
 
