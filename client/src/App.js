@@ -2,8 +2,8 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Movies from "./pages/Movies";
 import SingleMovie from "./pages/SingleMovie";
-import AddMovie from "./pages/AddMovie";
-import Category from "./pages/Category";
+import AddMovie from "./pages/AddMovie/AddMovie";
+import Category from "./pages/Category/Category";
 
 function App() {
     return (
