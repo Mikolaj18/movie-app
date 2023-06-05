@@ -28,5 +28,16 @@ describe('MoviesPage', () => {
         const movies = data.data;
         expect(movies.length).toEqual(moviesData.length);
     });
+
+    it('Should handle movie delete succesfully', async () => {
+        const movieId = 1;
+        const response = await fetch(`http://localhost:8800/category/${movieId}`, {
+            method: "DELETE",
+        });
+
+        const responseData = await response.json();
+        expect(parseInt(responseData.id)).toBe(movieId);
+        expect(responseData.message).toBe("Category deleted successfully");
+    });
 });
 

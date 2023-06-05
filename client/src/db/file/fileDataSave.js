@@ -7,12 +7,11 @@ export const fileDataSave = async (fileData) => {
         });
         console.log(response, 'test');
         if (response.ok) {
-            return await response.json(); // Zwróć adres URL obrazka
+            return await response.json();
         } else {
             throw new Error("Image upload failed");
         }
     } catch (error) {
         console.log(error);
-        return ""; // Zwróć pusty adres URL w przypadku błędu
     }
 }

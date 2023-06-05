@@ -123,6 +123,28 @@ describe('AddMovie', () => {
             expect(responseData.id).toBeDefined();
             expect(responseData.name).toBe(newMovie.name);
         });
-    });
 
+        it('Should handle movie update succesfully', async () => {
+            const movieId = 1;
+            const updatedMovie = {
+                title: "updatedMovie",
+                short_desc: "updatedMovieShortDesc",
+                long_desc: "updatedMovieLongDesc",
+                category: "cat2",
+                img: "img2.jpg",
+            };
+            const response = await fetch(`http://localhost:8800/movie/${movieId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedMovie),
+            });
+            expect(response.status).toBe(200);
+
+            const responseData = await response.json();
+            expect(parseInt(responseData.id)).toBe(movieId);
+            expect(responseData.name).toBe(updatedMovie.name);
+        });
+    });
 });

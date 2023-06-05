@@ -37,6 +37,16 @@ describe("Category", () => {
         expect(inputTextElement.value).toBe("ExampleCategory");
     });
 
+    it("Should render category error message", async () => {
+        const inputTextElement = screen.getByRole("textbox");
+        const submitButtonElement = screen.getByRole("button", {name: "Dodaj kategorię"});
+        await act(async () => {
+            userEvent.type(inputTextElement, "");
+            userEvent.click(submitButtonElement);
+        });
+        expect(screen.queryByText(/Nazwa kategorii nie może być pusta!/i)).toBeInTheDocument();
+    });
+
     describe("HTTP Requests", () => {
         it('Should fetch categories successfully', async () => {
             const response = await fetch('http://localhost:8800/categories');

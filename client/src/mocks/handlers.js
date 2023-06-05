@@ -51,6 +51,7 @@ export const moviesData = [
 ];
 
 export const handlers = [
+    // Categories
     rest.get("http://localhost:8800/categories", (req, res, ctx) => {
         return res(
             ctx.json({
@@ -66,6 +67,16 @@ export const handlers = [
         };
         return res(ctx.status(200), ctx.json(responseData));
     }),
+    rest.delete("http://localhost:8800/category/:id", (req, res, ctx) => {
+        const {id} = req.params;
+
+        const responseData = {
+            id,
+            message: "Category deleted successfully",
+        };
+        return res(ctx.status(200), ctx.json(responseData));
+    }),
+    // Movies
     rest.get("http://localhost:8800/movies", (req, res, ctx) => {
         return res(
             ctx.json({
@@ -82,6 +93,28 @@ export const handlers = [
             long_desc: newMovie.long_desc,
             category: newMovie.category,
             img: newMovie.img,
+        };
+        return res(ctx.status(200), ctx.json(responseData));
+    }),
+    rest.delete("http://localhost:8800/movie/:id", (req, res, ctx) => {
+        const {id} = req.params;
+
+        const responseData = {
+            id,
+            message: "Movie deleted successfully",
+        };
+        return res(ctx.status(200), ctx.json(responseData));
+    }),
+    rest.put("http://localhost:8800/movie/:id", (req, res, ctx) => {
+        const { id } = req.params;
+        const updatedMovie = req.body;
+        const responseData = {
+            id: id,
+            title: updatedMovie.title,
+            short_desc: updatedMovie.short_desc,
+            long_desc: updatedMovie.long_desc,
+            category: updatedMovie.category,
+            img: updatedMovie.img,
         };
         return res(ctx.status(200), ctx.json(responseData));
     }),

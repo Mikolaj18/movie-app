@@ -23,7 +23,7 @@ const AddMovie = () => {
     const [selectedCategory, setSelectedCategory] = useState();
 
     const handleCategoryChange = (e) => {
-        setSelectedCategory(e.target.value)
+        setSelectedCategory(e.target.value);
     }
 
     const upload = async () => {
@@ -38,7 +38,7 @@ const AddMovie = () => {
         }
     }
 
-    const handleClick = async (e) => {
+    const handleClick = async () => {
         let imgUrl;
         imgUrl = fileRef.current.files[0] ? await upload() : state.img;
         const movieObject = {
@@ -49,7 +49,7 @@ const AddMovie = () => {
             img: imgUrl,
         }
         try {
-            state ? await movieDataUpdate(state.id, movieObject) : await movieDataPost(movieObject)
+            state ? await movieDataUpdate(state.id, movieObject) : await movieDataPost(movieObject);
         } catch (e) {
             console.log(e);
         }
@@ -116,7 +116,7 @@ const AddMovie = () => {
                 />
             </Form>
         </div>
-            <button className="btn btn-success mt-4" onClick={handleClick}>Dodaj film</button>
+            <button className="btn btn-success mt-4" onClick={handleClick}>{state ? "Edytuj film" : "Dodaj film"}</button>
         </>
     )
 }

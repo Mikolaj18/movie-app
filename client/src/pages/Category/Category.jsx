@@ -9,6 +9,8 @@ import {categoryDataDelete} from "../../db/category/categoryDataDelete";
 
 const Category = () => {
     const [categories, setCategories] = useState([]);
+    const [formErrors, setFormErrors] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
     const categoryRef = useRef();
 
     useEffect(() => {
@@ -22,22 +24,33 @@ const Category = () => {
         await categoryDataDelete(id);
     }
 
-    const handleClick = async (e) => {
-        e.preventDefault();
-        const checkIfCategoryExists = await categoryDataGetByName(categoryRef.current.value)
+    useEffect(() => {
+        if (Object.keys(formErrors).length === 0 && isSubmit) {
+            const categoryObject = {
+                name: categoryRef.current.value,
+            }
+            categoryDataPost(categoryObject);
+        }
+    }, [formErrors]);
 
-        const categoryObject = {
-            name: categoryRef.current.value
-        }
-        if(!checkIfCategoryExists) {
-            await categoryDataPost(categoryObject);
-        }
+    const onSubmitForm =  (e) => {
+        e.preventDefault();
+        setFormErrors(validate());
+        setIsSubmit(true);
     };
 
+    const validate =  () => {
+        const errors = {};
+        const categoryValue = categoryRef.current.value;
+        if (!categoryValue.trim()) {
+            errors.name = "Nazwa kategorii nie może być pusta!";
+        }
+        return errors;
+    }
 
     return (
         <>
-        <Form>
+        <Form onSubmit={onSubmitForm}>
             <div>
                 <FormInput type="text"
                            className="form-control"
@@ -46,12 +59,13 @@ const Category = () => {
                            id="name"
                            name="name"
                            ref={categoryRef}
+                           formErrors={formErrors.name}
                 />
             </div>
             <div className="d-flex flex-wrap gap-3 mt-4">
-                <button className="btn btn-success" onClick={handleClick}>Dodaj kategorię</button>
+                <button className="btn btn-success">Dodaj kategorię</button>
                     <Link className="text-white text-decoration-none" to="/movie">
-                        <button className="btn btn-primary">
+                        <button type="submit" className="btn btn-primary">
                             Dodaj film
                         </button>
                     </Link>

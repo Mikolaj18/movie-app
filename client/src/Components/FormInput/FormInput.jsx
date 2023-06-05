@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 
-const FormInput = forwardRef(({ labelText, forLabel, className, labelVisible = true, ...inputProps }, ref) => {
+const FormInput = forwardRef(({ labelText, forLabel, className, formErrors, labelVisible = true, ...inputProps }, ref) => {
     return (
         <>
             <label className="form-label mt-3" htmlFor={forLabel}>{labelText}</label>
@@ -9,7 +9,7 @@ const FormInput = forwardRef(({ labelText, forLabel, className, labelVisible = t
                 className={className}
                 ref={ref}
             />
-            {/*{formErrors && <p style={{color: 'red', marginTop: '10px'}}>{formErrors}</p>}*/}
+            {formErrors && <p style={{color: 'red', marginTop: '10px'}}>{formErrors}</p>}
         </>
     );
 });

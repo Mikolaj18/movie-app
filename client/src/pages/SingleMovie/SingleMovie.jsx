@@ -35,9 +35,9 @@ const SingleMovie = () => {
                             }}
                         ></p>
                         <div className="d-flex flex-row flex-wrap gap-2">
-                            <button type="button" className="btn btn-primary">
-                                <Link className="text-white text-decoration-none" to="/">Powrót do listy filmów</Link>
-                            </button>
+                            <Link className="text-white text-decoration-none" to="/">
+                                <button className="btn btn-primary">Powrót do listy filmów</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
