@@ -31,6 +31,7 @@ describe("Category", () => {
 
     it('Should be able to change category text input', async () => {
         const inputTextElement = screen.getByRole("textbox");
+
         await act(async () => {
             userEvent.type(inputTextElement, "ExampleCategory");
         })
@@ -40,6 +41,7 @@ describe("Category", () => {
     it("Should render category error message", async () => {
         const inputTextElement = screen.getByRole("textbox");
         const submitButtonElement = screen.getByRole("button", {name: "Dodaj kategorię"});
+        expect(screen.queryByText(/Nazwa kategorii nie może być pusta!/i)).not.toBeInTheDocument();
         await act(async () => {
             userEvent.type(inputTextElement, "");
             userEvent.click(submitButtonElement);

@@ -5,7 +5,6 @@ export const fileDataSave = async (fileData) => {
             method: "POST",
             body: fileData,
         });
-        console.log(response, 'test');
         if (response.ok) {
             return await response.json();
         } else {

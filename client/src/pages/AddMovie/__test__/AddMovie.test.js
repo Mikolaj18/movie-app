@@ -21,6 +21,34 @@ beforeEach(() => {
     );
 });
 
+
+const typeIntoForm = ({title, shortDesc, longDesc}) => {
+    const titleInputElement = screen.getByLabelText("Tytuł");
+    const shortDescInputElement = screen.getByLabelText("Zajawka");
+    const longDescInputElement = screen.getByLabelText("Długi tytuł");
+
+    if (titleInputElement) {
+        userEvent.type(titleInputElement, title);
+    }
+    if (shortDescInputElement) {
+        userEvent.type(shortDescInputElement, shortDesc);
+    }
+    if (longDescInputElement) {
+        userEvent.type(longDescInputElement, longDesc);
+    }
+
+    return {
+        titleInputElement,
+        shortDescInputElement,
+        longDescInputElement,
+    }
+}
+
+const clickOnSubmitButton = () => {
+    const submitBtnElement = screen.getByRole("button");
+    userEvent.click(submitBtnElement);
+}
+
 describe('AddMovie', () => {
     describe("Text inputs elements", () => {
         it('Should render all text inputs elements', () => {
@@ -36,30 +64,25 @@ describe('AddMovie', () => {
         });
 
         it('Should be able to change title', async () => {
-            const titleInputElement = screen.getByLabelText("Tytuł");
             await act(async () => {
-                userEvent.type(titleInputElement, "Puss in Boots");
-
+                const {titleInputElement} = typeIntoForm({title: "Puss in Boots"});
+                expect(titleInputElement.value).toBe("Puss in Boots");
             });
-            expect(titleInputElement.value).toBe("Puss in Boots");
         });
 
         it('Should be able to change short description', async () => {
-            const shortDescInputElement = screen.getByLabelText(/zajawka/i);
             await act(async () => {
-                userEvent.type(shortDescInputElement, "lovely kitty");
+                const {shortDescInputElement} = typeIntoForm({shortDesc: "lovely kitty!"});
+                expect(shortDescInputElement.value).toBe("lovely kitty!");
 
             });
-            expect(shortDescInputElement.value).toBe("lovely kitty");
         });
 
         it('Should be able to change long description', async () => {
-            const longDescInputElement = screen.getByLabelText("Długi tytuł");
             await act(async () => {
-                userEvent.type(longDescInputElement, "Great movie!");
-
-            });
-            expect(longDescInputElement.value).toBe("Great movie!");
+                const {longDescInputElement} = typeIntoForm({longDesc: "Great movie!"});
+                expect(longDescInputElement.value).toBe("Great movie!");
+            })
         });
 
     });
@@ -102,49 +125,94 @@ describe('AddMovie', () => {
             expect(selectInput.value).toBe("cat2");
         });
 
-        it("Should handle successful movie creation", async () => {
-            const newMovie = {
-                title: "newMovie",
-                short_desc: "movieShortDesc",
-                long_desc: "movieLongDesc",
-                category: "cat1",
-                img: "img.jpg",
-            };
-            const response = await fetch("http://localhost:8800/movies", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newMovie),
-            });
+        it("Should render title error message", async () => {
+            expect(screen.queryByText(/Nazwa kategorii nie może być pusta!/i)).not.toBeInTheDocument();
 
-            expect(response.status).toBe(200);
-            const responseData = await response.json();
-            expect(responseData.id).toBeDefined();
-            expect(responseData.name).toBe(newMovie.name);
+            await act(async () => {
+                typeIntoForm({
+                    title: "",
+                    shortDesc: "test",
+                    longDesc: "test",
+                    file: new File(['tes'], 'test.jpg', { type: 'image/jpeg' }),
+                })
+                clickOnSubmitButton();
+            });
+            expect(screen.queryByText(/Nazwa kategorii nie może być pusta!/i)).toBeInTheDocument();
         });
 
-        it('Should handle movie update succesfully', async () => {
-            const movieId = 1;
-            const updatedMovie = {
-                title: "updatedMovie",
-                short_desc: "updatedMovieShortDesc",
-                long_desc: "updatedMovieLongDesc",
-                category: "cat2",
-                img: "img2.jpg",
-            };
-            const response = await fetch(`http://localhost:8800/movie/${movieId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(updatedMovie),
+        it("Should render short description error message", async () => {
+            expect(screen.queryByText(/Zajawka nie może być pusta!/i)).not.toBeInTheDocument();
+            await act(async () => {
+                typeIntoForm({
+                    title: "test",
+                    shortDesc: "",
+                    longDesc: "test",
+                    file: new File(['tes'], 'test.jpg', { type: 'image/jpeg' }),
+                })
+                clickOnSubmitButton();
             });
-            expect(response.status).toBe(200);
+            expect(screen.queryByText(/Zajawka nie może być pusta!/i)).toBeInTheDocument();
+        });
 
-            const responseData = await response.json();
-            expect(parseInt(responseData.id)).toBe(movieId);
-            expect(responseData.name).toBe(updatedMovie.name);
+        it("Should render long description error message", async () => {
+            expect(screen.queryByText(/Opis nie może być pusty!/i)).not.toBeInTheDocument();
+            await act(async () => {
+                typeIntoForm({
+                    title: "test",
+                    shortDesc: "test",
+                    longDesc: "",
+                    file: new File(['tes'], 'test.jpg', { type: 'image/jpeg' }),
+                })
+                clickOnSubmitButton();
+            });
+            expect(screen.queryByText(/Opis nie może być pusty!/i)).toBeInTheDocument();
+        });
+
+        describe("HTTP requests", () => {
+            it("Should handle successful movie creation", async () => {
+                const newMovie = {
+                    title: "newMovie",
+                    short_desc: "movieShortDesc",
+                    long_desc: "movieLongDesc",
+                    category: "cat1",
+                    img: "img.jpg",
+                };
+                const response = await fetch("http://localhost:8800/movies", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newMovie),
+                });
+
+                expect(response.status).toBe(200);
+                const responseData = await response.json();
+                expect(responseData.id).toBeDefined();
+                expect(responseData.name).toBe(newMovie.name);
+            });
+
+            it('Should handle movie update succesfully', async () => {
+                const movieId = 1;
+                const updatedMovie = {
+                    title: "updatedMovie",
+                    short_desc: "updatedMovieShortDesc",
+                    long_desc: "updatedMovieLongDesc",
+                    category: "cat2",
+                    img: "img2.jpg",
+                };
+                const response = await fetch(`http://localhost:8800/movie/${movieId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(updatedMovie),
+                });
+                expect(response.status).toBe(200);
+
+                const responseData = await response.json();
+                expect(parseInt(responseData.id)).toBe(movieId);
+                expect(responseData.name).toBe(updatedMovie.name);
+            });
         });
     });
 });

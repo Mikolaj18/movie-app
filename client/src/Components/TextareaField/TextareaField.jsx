@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 
-const TextareaField = forwardRef(({ labelText, forLabel, className, ...inputProps }, ref) => {
+const TextareaField = forwardRef(({ labelText, forLabel, className, formErrors, ...inputProps }, ref) => {
     return (
         <>
             <label className="form-label" htmlFor={forLabel}>{labelText}</label>
@@ -9,7 +9,7 @@ const TextareaField = forwardRef(({ labelText, forLabel, className, ...inputProp
                 className={className}
                 ref={ref}
             />
-            {/*{formErrors && <p style={{color: 'red', marginTop: '10px'}}>{formErrors}</p>}*/}
+            {formErrors && <p style={{color: 'red', marginTop: '10px'}}>{formErrors}</p>}
         </>
     );
 });
