@@ -98,7 +98,7 @@ const AddMovie = () => {
     return (
         <>
             <div>
-                <h1>Dodaj nowy film</h1>
+                <h1>{state ? "Edytuj film" : "Dodaj nowy film"}</h1>
                 <Form onSubmit={onSubmitForm}>
                     <FormInput type="text"
                                className="form-control"

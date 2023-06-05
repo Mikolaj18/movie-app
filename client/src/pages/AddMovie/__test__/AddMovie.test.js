@@ -133,7 +133,6 @@ describe('AddMovie', () => {
                     title: "",
                     shortDesc: "test",
                     longDesc: "test",
-                    file: new File(['tes'], 'test.jpg', { type: 'image/jpeg' }),
                 })
                 clickOnSubmitButton();
             });
@@ -147,7 +146,6 @@ describe('AddMovie', () => {
                     title: "test",
                     shortDesc: "",
                     longDesc: "test",
-                    file: new File(['tes'], 'test.jpg', { type: 'image/jpeg' }),
                 })
                 clickOnSubmitButton();
             });
@@ -161,7 +159,6 @@ describe('AddMovie', () => {
                     title: "test",
                     shortDesc: "test",
                     longDesc: "",
-                    file: new File(['tes'], 'test.jpg', { type: 'image/jpeg' }),
                 })
                 clickOnSubmitButton();
             });
