@@ -125,44 +125,46 @@ describe('AddMovie', () => {
             expect(selectInput.value).toBe("cat2");
         });
 
-        it("Should render title error message", async () => {
-            expect(screen.queryByText(/Nazwa kategorii nie może być pusta!/i)).not.toBeInTheDocument();
+        describe("Error handling", () => {
+            it("Should render title error message", async () => {
+                expect(screen.queryByText(/Nazwa kategorii nie może być pusta!/i)).not.toBeInTheDocument();
 
-            await act(async () => {
-                typeIntoForm({
-                    title: "",
-                    shortDesc: "test",
-                    longDesc: "test",
-                })
-                clickOnSubmitButton();
+                await act(async () => {
+                    typeIntoForm({
+                        title: "",
+                        shortDesc: "test",
+                        longDesc: "test",
+                    })
+                    clickOnSubmitButton();
+                });
+                expect(screen.queryByText(/Nazwa kategorii nie może być pusta!/i)).toBeInTheDocument();
             });
-            expect(screen.queryByText(/Nazwa kategorii nie może być pusta!/i)).toBeInTheDocument();
-        });
 
-        it("Should render short description error message", async () => {
-            expect(screen.queryByText(/Zajawka nie może być pusta!/i)).not.toBeInTheDocument();
-            await act(async () => {
-                typeIntoForm({
-                    title: "test",
-                    shortDesc: "",
-                    longDesc: "test",
-                })
-                clickOnSubmitButton();
+            it("Should render short description error message", async () => {
+                expect(screen.queryByText(/Zajawka nie może być pusta!/i)).not.toBeInTheDocument();
+                await act(async () => {
+                    typeIntoForm({
+                        title: "test",
+                        shortDesc: "",
+                        longDesc: "test",
+                    })
+                    clickOnSubmitButton();
+                });
+                expect(screen.queryByText(/Zajawka nie może być pusta!/i)).toBeInTheDocument();
             });
-            expect(screen.queryByText(/Zajawka nie może być pusta!/i)).toBeInTheDocument();
-        });
 
-        it("Should render long description error message", async () => {
-            expect(screen.queryByText(/Opis nie może być pusty!/i)).not.toBeInTheDocument();
-            await act(async () => {
-                typeIntoForm({
-                    title: "test",
-                    shortDesc: "test",
-                    longDesc: "",
-                })
-                clickOnSubmitButton();
+            it("Should render long description error message", async () => {
+                expect(screen.queryByText(/Opis nie może być pusty!/i)).not.toBeInTheDocument();
+                await act(async () => {
+                    typeIntoForm({
+                        title: "test",
+                        shortDesc: "test",
+                        longDesc: "",
+                    })
+                    clickOnSubmitButton();
+                });
+                expect(screen.queryByText(/Opis nie może być pusty!/i)).toBeInTheDocument();
             });
-            expect(screen.queryByText(/Opis nie może być pusty!/i)).toBeInTheDocument();
         });
 
         describe("HTTP requests", () => {
