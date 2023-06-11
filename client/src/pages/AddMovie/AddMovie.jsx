@@ -8,7 +8,6 @@ import SelectField from "../../Components/SelectField/SelectField";
 import {movieDataUpdate} from "../../db/movie/movieDataUpdate";
 import {fileDataSave} from "../../db/file/fileDataSave";
 import TextareaField from "../../Components/TextareaField/TextareaField";
-import {categoryDataPost} from "../../db/category/categoriesDataPost";
 
 const AddMovie = () => {
     const state = useLocation().state;

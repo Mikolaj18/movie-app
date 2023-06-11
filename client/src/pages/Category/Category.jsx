@@ -3,7 +3,6 @@ import FormInput from "../../Components/FormInput/FormInput";
 import React, {useEffect, useRef, useState} from "react";
 import {categoryDataPost} from "../../db/category/categoriesDataPost";
 import {categoriesDataGetAll} from "../../db/category/categoriesDataGetAll";
-import {categoryDataGetByName} from "../../db/category/categoryDataGetByName";
 import {Link} from "react-router-dom";
 import {categoryDataDelete} from "../../db/category/categoryDataDelete";
 
